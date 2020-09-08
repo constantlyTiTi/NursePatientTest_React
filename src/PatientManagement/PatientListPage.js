@@ -8,6 +8,7 @@ import {
   TableBody,
   TableContainer,
   Paper,
+  Button
 } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/core/styles";
 
@@ -123,7 +124,9 @@ const PatientListPage = ({ history }) => {
           </TableContainer>
         </div>
       </ThemeProvider>
-      <button onClick={createNewPatient}>Add New Patient</button>
+      <div className={useStyles.button}>
+      <Button onClick={createNewPatient}>Add New Patient</Button>
+      </div>
     </>
   );
 };

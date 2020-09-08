@@ -15,6 +15,12 @@
         // maxHeight: '1%',
       },
     },
+    button:{
+      marginTop: theme.spacing(5),
+      marginRight: 'auto',
+      marginLeft: 'auto',
+      width: theme.spacing(30),
+    }
   }));
 
   export const TableTheme = createMuiTheme({

@@ -26,6 +26,8 @@ export default class NurseProfile extends React.Component {
   async componentDidMount() {
     const sharedNurseId = this.context.nurseSharedId;
     const url = `http://localhost:8080/nurse/${sharedNurseId}`;
+
+    console.log("context",this.context);
     const response = await fetch(url);
     const data = await response.json();
     this.setState({ loading: false, nurse: data });

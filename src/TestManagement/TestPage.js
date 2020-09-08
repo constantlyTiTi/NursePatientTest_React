@@ -41,13 +41,10 @@ class testPage extends React.Component {
     this.context.setNurseContext("searchMethod", "all");
   }
 
-   testPageHeight=()=>TestPageHeight();
-
   render() {
     return (
       <>
-      <div className={this.testPageHeight.root}> 
-      <Paper  elevation={5}>
+      <div className="NurseProfile-page"> 
         <Grid container spacing={3}>
           <Grid item xs={12} sm={12} md={6} lg={6}>
             <TextField variant="outlined" label="Patient Id" name="searchByPatientId" onChange={this.handleOnChange} />
@@ -68,7 +65,6 @@ class testPage extends React.Component {
           </Button>
           </Grid>
         </Grid>
-        </Paper>
         </div>
       </>
     );

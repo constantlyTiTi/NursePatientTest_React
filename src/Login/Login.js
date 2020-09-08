@@ -21,16 +21,32 @@ export default function Login() {
   const [loginState, setLoginState] = useState({
     nurseSharedId: "",
     password: "",
+    idError: false,
+    idErrorMessage:"",
+    passwordError: false,
+    passwordErrorMessage:"",
+
   });
   function nurseIdOnChangeHandler(e) {
-    setLoginState({ ...loginState, nurseSharedId: e.target.value });
+    setLoginState({ ...loginState, nurseSharedId: e.target.value,idError: false,idErrorMessage:""  });
   }
   function passwordOnChangeHandler(e) {
-    setLoginState({ ...loginState, password: e.target.value });
+    setLoginState({ ...loginState, password: e.target.value,passwordError: false,passwordErrorMessage:"" });
   }
-  function submit(event) {
-    appContext.setNurseContext("nurseSharedId", loginState.nurseSharedId);
-    history.push("/NurseProfile");
+  async function login(event) {
+    const url = `http://localhost:8080/nurse/${loginState.nurseSharedId}`;
+    const response = await fetch(url);
+    const data = await response.json();
+    if (data != null) {
+      if (loginState.password === data.password) {
+        appContext.setNurseContext("nurseSharedId", loginState.nurseSharedId);
+        history.push("/NurseProfile");
+      } else {
+        setLoginState({ ...loginState, passwordError: true,passwordErrorMessage:"Password not match" });
+      }
+    } else {
+      setLoginState({ ...loginState, idError: true,idErrorMessage:"ID not Exist" });
+    }
     event.preventDefault();
   }
 
@@ -47,7 +63,7 @@ export default function Login() {
     },
     form: {
       width: "100%", // Fix IE 11 issue.
-    //   marginTop: theme.spacing(0),
+      //   marginTop: theme.spacing(0),
     },
     submit: {
       margin: theme.spacing(3, 0, 2),
@@ -66,8 +82,9 @@ export default function Login() {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <form className={classes.form} noValidate>
+          <form className={classes.form} >
             <TextField
+              error={loginState.idError}
               variant="outlined"
               margin="normal"
               required
@@ -75,11 +92,13 @@ export default function Login() {
               id="nurseId"
               label="Nurse ID"
               name="nurseId"
+              helperText={loginState.idErrorMessage}
               autoFocus
               value={loginState.nurseSharedId}
               onChange={nurseIdOnChangeHandler}
             />
             <TextField
+              error={loginState.passwordError}
               variant="outlined"
               margin="normal"
               required
@@ -89,6 +108,7 @@ export default function Login() {
               type="password"
               id="password"
               autoComplete="current-password"
+              helperText={loginState.passwordErrorMessage}
               value={loginState.password}
               onChange={passwordOnChangeHandler}
             />
@@ -97,24 +117,23 @@ export default function Login() {
               label="Remember me"
             />
             <Button
-              type="submit"
               fullWidth
               variant="contained"
               color="primary"
               className={classes.submit}
-              onClick={submit}
+              onClick={login}
             >
               Sign In
             </Button>
             <Grid container>
-              <Grid item xs>
+              {/* <Grid item xs>
                 <Link href="#" variant="body2">
                   Forgot password?
                 </Link>
-              </Grid>
+              </Grid> */}
               <Grid item>
-                <Link href="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
+                <Link to="/Register" variant="body2">
+                  {"Don't have an account? Register"}
                 </Link>
               </Grid>
             </Grid>

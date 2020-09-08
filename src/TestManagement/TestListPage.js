@@ -55,6 +55,16 @@ export default function TestListPage() {
     sharedNurseContext.setNurseContext("test", item);
   };
 
+  // //get TestItems of each Test
+  // const getTestItem= (testItemId)=>{
+  //   let url = `http://localhost:8080/TestItems/TestItem_${testItemId}`;
+  //   let testItem= await fetch(url)
+  //     .then((response) => response.json())
+  //     .then((data) => data.itemName);
+    
+  //     return testItem;
+  // }
+
   return (
     <>
       <ThemeProvider theme={tableTheme}>
@@ -66,6 +76,7 @@ export default function TestListPage() {
                   <StyledTableCell>Test Id</StyledTableCell>
                   <StyledTableCell>Operated by Nurse Id</StyledTableCell>
                   <StyledTableCell>Test Items</StyledTableCell>
+                  <StyledTableCell>Test Results</StyledTableCell>
                   <StyledTableCell>Test Date</StyledTableCell>
                   <StyledTableCell>Edit/Delete</StyledTableCell>
                 </TableRow>
@@ -77,9 +88,8 @@ export default function TestListPage() {
                       <StyledTableRow key={index} scope="row">
                         <StyledTableCell>{item.testId}</StyledTableCell>
                         <StyledTableCell>{item.nurseId}</StyledTableCell>
-                        <StyledTableCell>
-                          {item.bpl + item.bph + item.temperature}
-                        </StyledTableCell>
+                        {/* <StyledTableCell>{getTestItem(item.testItemId)}</StyledTableCell> */}
+                        <StyledTableCell>{item.testResult}</StyledTableCell>
                         <StyledTableCell>{item.date}</StyledTableCell>
                         <StyledTableCell>
                           <Link

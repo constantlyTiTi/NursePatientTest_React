@@ -19,6 +19,7 @@ import TestListPage from "./TestManagement/TestListPage";
 import CreateNewPatient from "./PatientManagement/CreateNewPatient";
 import PatientDetails from "./PatientManagement/PatientDetails";
 import Logout from "./Logout/Logout";
+import Register from './Register/Register';
 const navHeader = [
   {
     name: "Home Page",
@@ -29,6 +30,12 @@ const navHeader = [
   {
     name: "Login",
     to: "/Login",
+    typoClass: "App-NavHeader-typo",
+    buttonClass: "",
+  },
+  {
+    name: "Register",
+    to: "/Register",
     typoClass: "App-NavHeader-typo",
     buttonClass: "",
   },
@@ -66,11 +73,12 @@ class App extends Component {
 
   //Before Login AppBar items
   setAppBarBeforeLogin = () => {
+    console.log("login")
     return navHeader.map((item, index) => (
       <NavigationBar
         key={index}
         name={item.name}
-        to={item.to}
+        click={item.to}
         buttonClass={item.buttonClass}
         typoClass={item.typoClass}
       />
@@ -85,7 +93,7 @@ class App extends Component {
           <NavigationBar
             key={index}
             name={item.name}
-            to={item.to}
+            click={item.to}
             typoClass={item.typoClass}
           />
         </Grid>
@@ -113,7 +121,7 @@ class App extends Component {
     return (
       <Typography variant="body2" color="textSecondary" align="center">
         {"Copyright © "}
-        TingLi Website
+        TingLi Website{" "}
         {new Date().getFullYear()}
         {"."}
       </Typography>
@@ -123,11 +131,8 @@ class App extends Component {
   //profileBody
   profilePage = () => (
     <Grid container spacing={3} style={{paddingLeft:"10%"}}>
-      <Grid item xs={12} sm={12} md={6} lg={6}>
+      <Grid item xs={12} sm={12} md={12} lg={12}>
         <Profile />
-      </Grid>
-      <Grid item xs={12} sm={12} md={6} lg={6}>
-        <Calender />
       </Grid>
     </Grid>
   );
@@ -143,7 +148,6 @@ class App extends Component {
                 <Toolbar>
                   <NurseContext.Consumer>
                     {(value) => {
-                      console.log("render time", Date.now());
                       return this.setAppBar(value);
                     }}
                   </NurseContext.Consumer>
@@ -155,6 +159,9 @@ class App extends Component {
                 </Route>
                 <Route exact path="/Login">
                   <Login />
+                </Route>
+                <Route exact path="/Register">
+                  <Register />
                 </Route>
                 <Route exact path="/TestPage">
                   <TestPage />
