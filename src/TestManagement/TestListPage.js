@@ -24,6 +24,7 @@ export default function TestListPage() {
   const tableTheme = TableTheme;
 
   useEffect(() => {
+    console.log("test Type",sharedNurseContext.searchMethod)
     let nurseId = sharedNurseContext.nurseSharedId;
     let sharedSearchMethod = sharedNurseContext.searchMethod;
     function getTests() {
@@ -55,16 +56,6 @@ export default function TestListPage() {
     sharedNurseContext.setNurseContext("test", item);
   };
 
-  // //get TestItems of each Test
-  // const getTestItem= (testItemId)=>{
-  //   let url = `http://localhost:8080/TestItems/TestItem_${testItemId}`;
-  //   let testItem= await fetch(url)
-  //     .then((response) => response.json())
-  //     .then((data) => data.itemName);
-    
-  //     return testItem;
-  // }
-
   return (
     <>
       <ThemeProvider theme={tableTheme}>
@@ -88,9 +79,9 @@ export default function TestListPage() {
                       <StyledTableRow key={index} scope="row">
                         <StyledTableCell>{item.testId}</StyledTableCell>
                         <StyledTableCell>{item.nurseId}</StyledTableCell>
-                        {/* <StyledTableCell>{getTestItem(item.testItemId)}</StyledTableCell> */}
+                        <StyledTableCell>{item.testItemId}</StyledTableCell>
                         <StyledTableCell>{item.testResult}</StyledTableCell>
-                        <StyledTableCell>{item.date}</StyledTableCell>
+                        <StyledTableCell>{item.date.split("T",1)}</StyledTableCell>
                         <StyledTableCell>
                           <Link
                             to="/TestManagement/TestDetails"

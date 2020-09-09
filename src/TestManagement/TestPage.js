@@ -2,8 +2,9 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import { NurseContext } from "../PersonalPage/NurseContext";
-import { TextField, Grid,Paper } from "@material-ui/core";
-import { TestPageHeight } from "../AppCss"
+import { Grid, InputBase } from "@material-ui/core";
+import SearchIcon from "@material-ui/icons/Search";
+import { TestPageHeight } from "../AppCss";
 
 class testPage extends React.Component {
   static contextType = NurseContext;
@@ -30,10 +31,13 @@ class testPage extends React.Component {
   createTest() {
     this.props.history.push("/TestManagement/createNewTest");
   }
-  searchTestByPatient() {
-    this.props.history.push("/TestManagement/testListPage");
-    this.context.setNurseContext("searchMethod", "patientId");
-    this.context.setNurseContext("searchValue", this.state.searchValue);
+  searchTestByPatient(event) {
+    var code = event.keyCode || event.which;
+    if (code === 13) {
+      this.props.history.push("/TestManagement/testListPage");
+      this.context.setNurseContext("searchMethod", "patientId");
+      this.context.setNurseContext("searchValue", this.state.searchValue);
+    }
   }
 
   showAllTest() {
@@ -44,27 +48,29 @@ class testPage extends React.Component {
   render() {
     return (
       <>
-      <div className="NurseProfile-page"> 
-        <Grid container spacing={3}>
-          <Grid item xs={12} sm={12} md={6} lg={6}>
-            <TextField variant="outlined" label="Patient Id" name="searchByPatientId" onChange={this.handleOnChange} />
+        <div className="NurseProfile-page">
+          <Grid container spacing={3}>
+            <Grid item xs={12} sm={12} md={6} lg={6}>
+              <SearchIcon />
+              <InputBase
+                variant="outlined"
+                placeholder="Search by Patient Id"
+                name="searchByPatientId"
+                onChange={this.handleOnChange}
+                onKeyPress={this.searchTestByPatient}
+              />
+            </Grid>
+            <Grid item xs={12} sm={12} md={6} lg={6}>
+              <Button variant="contained" onClick={this.createTest}>
+                Create New Test
+              </Button>
+            </Grid>
+            <Grid item xs={12} sm={12} md={6} lg={6}>
+              <Button variant="contained" onClick={this.showAllTest}>
+                Find All Tests By Nurse
+              </Button>
+            </Grid>
           </Grid>
-          <Grid item xs={12} sm={12} md={6} lg={6}>
-            <Button variant="contained" onClick={this.searchTestByPatient}>
-              Search
-            </Button>
-          </Grid>
-          <Grid item xs={12} sm={12} md={6} lg={6}>
-          <Button variant="contained" onClick={this.createTest}>
-            Create New Test
-          </Button>
-          </Grid>
-          <Grid item xs={12} sm={12} md={6} lg={6}>
-          <Button variant="contained" onClick={this.showAllTest}>
-            Find All Tests
-          </Button>
-          </Grid>
-        </Grid>
         </div>
       </>
     );

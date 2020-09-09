@@ -125,7 +125,7 @@ export default class NurseProfile extends React.Component {
                 />
               </Grid>
               <Grid item xs={12} sm={12} md={12} lg={12}>
-                <Button variant="contained" onClick={this.handleOnSubmit}>
+                <Button variant="contained" color="primary" onClick={this.handleOnSubmit}>
                   Save Changes
                 </Button>
               </Grid>
