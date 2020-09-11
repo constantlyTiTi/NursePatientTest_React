@@ -2,14 +2,13 @@ import React, { Component } from "react";
 // import logo from './logo.svg';
 import "./App.css";
 import NavigationBar from "./NavigationBar/NavigationBar";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { Switch, Route,withRouter } from "react-router-dom";
 import Login from "./Login/Login";
 import ProjectDescription from "./WebDescription/ProjectNavigation";
 import { NurseContext } from "./PersonalPage/NurseContext";
 // import PersonalPage from "./PersonalPage/PersonalPage";
-import { AppBar, Typography, Box, Toolbar, Grid } from "@material-ui/core";
+import { AppBar, Typography, Box, Toolbar, Grid,CardMedia } from "@material-ui/core";
 import Profile from "./PersonalPage/NurseProfile";
-import Calender from "./PersonalPage/Calender";
 
 import TestPage from "./TestManagement/TestPage";
 import PatientListPage from "./PatientManagement/PatientListPage";
@@ -20,22 +19,24 @@ import CreateNewPatient from "./PatientManagement/CreateNewPatient";
 import PatientDetails from "./PatientManagement/PatientDetails";
 import Logout from "./Logout/Logout";
 import Register from './Register/Register';
+import HeaderBackground from './assets/SignIn_background.jpg'
+
 const navHeader = [
   {
     name: "Home Page",
-    to: "/",
+    to: "",
     typoClass: "App-NavHeader-typo",
     buttonClass: "HomePage-Button",
   },
   {
     name: "Login",
-    to: "/Login",
+    to: "login",
     typoClass: "App-NavHeader-typo",
     buttonClass: "",
   },
   {
     name: "Register",
-    to: "/Register",
+    to: "register",
     typoClass: "App-NavHeader-typo",
     buttonClass: "",
   },
@@ -43,19 +44,19 @@ const navHeader = [
 const routerMapping = [
   {
     name: "Profile",
-    to: "/NurseProfile",
+    to: "nurseProfile",
     typoClass: "App-NavHeader-typo",
   },
-  { name: "Tests", to: "/TestPage", typoClass: "App-NavHeader-typo" },
+  { name: "Tests", to: "test", typoClass: "App-NavHeader-typo" },
   {
     name: "Patients",
-    to: "/PatientListPage",
+    to: "patient",
     typoClass: "App-NavHeader-typo",
   },
 ];
 const logoutRouterMapping = {
   name: "Logout",
-  to: "/",
+  to: "",
   typoClass: "App-NavHeader-typo",
 };
 class App extends Component {
@@ -73,12 +74,13 @@ class App extends Component {
 
   //Before Login AppBar items
   setAppBarBeforeLogin = () => {
-    console.log("login")
+        const url=this.props.match.url;
     return navHeader.map((item, index) => (
       <NavigationBar
         key={index}
         name={item.name}
-        click={item.to}
+        click={`${url}${item.to}`}
+        // click={item.to}
         buttonClass={item.buttonClass}
         typoClass={item.typoClass}
       />
@@ -87,13 +89,14 @@ class App extends Component {
 
   //after Login AppBar items
   setAppBarAfterLogin = () => {
+    const url=this.props.match.url;
     return routerMapping.map((item, index) => {
       return (
         <Grid key={index} container item xs={12} sm={6} lg={3} md={3}>
           <NavigationBar
             key={index}
             name={item.name}
-            click={item.to}
+            click={`${url}${item.to}`}
             typoClass={item.typoClass}
           />
         </Grid>
@@ -104,13 +107,14 @@ class App extends Component {
   //switch AppBar by Login and Logout
   setAppBar = (value) => {
     let item = logoutRouterMapping;
+    const url=this.props.match.url;
     if (value.nurseSharedId === "") {
       return this.setAppBarBeforeLogin();
     } else {
       return (
         <>
           {this.setAppBarAfterLogin()}
-          <Logout name={item.name} to={item.to} typoClass={item.typoClass} />
+          <Logout name={item.name} to={`${url}${item.to}`} typoClass={item.typoClass} />
         </>
       );
     }
@@ -138,13 +142,15 @@ class App extends Component {
   );
 
   render() {
+    const path=this.props.match.path;
     return (
       <>
-        <header>Nurse Patient Tests Management System</header>
+        <header >
+          <CardMedia className="header-css" image={HeaderBackground} alt="header image"> Nurse Patient Tests Management System</CardMedia>
+         </header>
         <NurseContext.Provider value={this.state}>
           <body className="App-body">
-            <Router>
-              <AppBar position="static">
+              <AppBar position="sticky">
                 <Toolbar>
                   <NurseContext.Consumer>
                     {(value) => {
@@ -154,44 +160,43 @@ class App extends Component {
                 </Toolbar>
               </AppBar>
               <Switch>
-                <Route exact path="/">
+                <Route exact path={`${path}`}>
                   <ProjectDescription />
                 </Route>
-                <Route exact path="/Login">
-                  <Login />
+                <Route exact path={`${path}login`}>
+                  <Login parentPath={path}/>
                 </Route>
-                <Route exact path="/Register">
+                <Route exact path={`${path}register`}>
                   <Register />
                 </Route>
-                <Route exact path="/TestPage">
+                <Route exact path={`${path}test`}>
                   <TestPage />
                 </Route>
-                <Route exact path="/NurseProfile">
+                <Route exact path={`${path}nurseprofile`}>
                   {this.profilePage()}
                 </Route>
-                <Route exact path="/PatientListPage">
+                <Route exact path={`${path}patient`}>
                   <PatientListPage />
                 </Route>
-                <Route exact path="/TestManagement/TestDetails">
+                <Route exact path={`${path}test/testdetails`}>
                   <TestDetails />
                 </Route>
-                <Route exact path="/TestManagement/createNewTest">
+                <Route exact path={`${path}test/createnewtest`}>
                   <CreateNewTest />
                 </Route>
-                <Route exact path="/TestManagement/testListPage">
+                <Route exact path={`${path}test/alltests`}>
                   <TestListPage />
                 </Route>
-                <Route exact path="/TestManagement/allTestListPage">
+                <Route exact path={`${path}test/createnewtest/alltests`}>
                   <TestListPage />
                 </Route>
-                <Route exact path="/PatientManagement/createNewPatient">
+                <Route exact path={`${path}patient/createnewpatient`}>
                   <CreateNewPatient />
                 </Route>
-                <Route path="/PatientManagement/Patient/:id">
+                <Route path={`${path}patient/:id`}>
                   <PatientDetails />
                 </Route>
               </Switch>
-            </Router>
           </body>
         </NurseContext.Provider>
         <footer>
@@ -201,4 +206,4 @@ class App extends Component {
     );
   }
 }
-export default App;
+export default withRouter(App);

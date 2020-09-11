@@ -4,7 +4,6 @@ import { Typography, Button } from "@material-ui/core";
 
 const NavigationBar = (props) => {
   function addLink() {
-    console.log(props.click)
     //  return props.click===""?props.history.push(props.click):props.click;
     return props.history.push(props.click);
   }

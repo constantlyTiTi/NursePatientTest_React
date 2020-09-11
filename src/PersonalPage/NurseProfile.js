@@ -1,6 +1,7 @@
 import React from "react";
 import { NurseContext } from "./NurseContext";
-import { InputLabel, Input, TextField, Grid, Button } from "@material-ui/core";
+import { TextField, Grid, Button } from "@material-ui/core";
+import {ServerUrl} from '../Constant' 
 // const NurseIdContext = React.createContext(1);
 export default class NurseProfile extends React.Component {
   static contextType = NurseContext;
@@ -25,7 +26,7 @@ export default class NurseProfile extends React.Component {
   //fetch data
   async componentDidMount() {
     const sharedNurseId = this.context.nurseSharedId;
-    const url = `http://localhost:8080/nurse/${sharedNurseId}`;
+    const url = `${ServerUrl}nurse/${sharedNurseId}`;
 
     console.log("context",this.context);
     const response = await fetch(url);
@@ -57,7 +58,7 @@ export default class NurseProfile extends React.Component {
   //handle submit updated data
   async handleOnSubmit(event) {
     const sharedNurseId = this.context.nurseSharedId;
-    const url = `http://localhost:8080/nurse/${sharedNurseId}`;
+    const url = `${ServerUrl}nurse/${sharedNurseId}`;
     const postUpdate = {
       method: "PUT",
       headers: { "Content-Type": "application/json" },

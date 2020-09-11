@@ -2,6 +2,7 @@ import React from "react";
 import { TextField, Grid, Button } from "@material-ui/core";
 import { NurseContext } from "../PersonalPage/NurseContext";
 import { withRouter } from "react-router-dom";
+import{ServerUrl} from '../Constant'
 
 class Register extends React.Component {
   static contextType = NurseContext;
@@ -47,7 +48,7 @@ class Register extends React.Component {
   }
   //handle submit data
   async handleOnSubmit(event) {
-    const url = `http://localhost:8080/register`;
+    const url = `${ServerUrl}register`;
     const postSubmit = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -57,7 +58,7 @@ class Register extends React.Component {
       .then((response) => response.json())
       .then((data) =>{
         this.context.setNurseContext("nurseSharedId", data.nurseId);
-        this.props.history.push("/NurseProfile");}
+        this.props.history.push(`${this.props.match.url}/nurseprofile`);}
       );
   }
 

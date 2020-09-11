@@ -1,6 +1,8 @@
 import React from "react";
 import { NurseContext } from "../PersonalPage/NurseContext";
 import { TextField, Grid, Button } from "@material-ui/core";
+import {withRouter} from 'react-router-dom';
+import {ServerUrl} from '../Constant'
 
 class createNewPatient extends React.Component {
   static contextType = NurseContext;
@@ -53,12 +55,15 @@ class createNewPatient extends React.Component {
   // }
 
   submitForm(event) {
-    const url = "http://localhost:8080/nurse/1/newPatient";
+    const url = `${ServerUrl}nurse/${this.context.nurseSharedId}/newPatient`;
     fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(this.state.patient),
-    }).then((response) => response.json);
+    }).then((response) => 
+    {if(response.ok){
+        this.props.history.push(`/patient`);
+    }});
   }
 
   render() {
@@ -120,4 +125,4 @@ class createNewPatient extends React.Component {
     );
   }
 }
-export default createNewPatient;
+export default withRouter(createNewPatient);

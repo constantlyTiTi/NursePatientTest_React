@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { NurseContext } from "../PersonalPage/NurseContext";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory,useRouteMatch } from "react-router-dom";
 import {
   Grid,
   Container,
@@ -14,8 +14,9 @@ import {
   Button,
 } from "@material-ui/core";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import {ServerUrl} from '../Constant'
 
-export default function Login() {
+export default function Login(props) {
   const appContext = useContext(NurseContext);
   let history = useHistory();
   const [loginState, setLoginState] = useState({
@@ -34,13 +35,14 @@ export default function Login() {
     setLoginState({ ...loginState, password: e.target.value,passwordError: false,passwordErrorMessage:"" });
   }
   async function login(event) {
-    const url = `http://localhost:8080/nurse/${loginState.nurseSharedId}`;
-    const response = await fetch(url);
+    const loginUrl = `${ServerUrl}${loginState.nurseSharedId}`;
+    const response = await fetch(loginUrl);
     const data = await response.json();
     if (data != null) {
       if (loginState.password === data.password) {
         appContext.setNurseContext("nurseSharedId", loginState.nurseSharedId);
-        history.push("/NurseProfile");
+
+        history.push(`${props.parentPath}nurseprofile`);
       } else {
         setLoginState({ ...loginState, passwordError: true,passwordErrorMessage:"Password not match" });
       }
@@ -73,7 +75,7 @@ export default function Login() {
 
   return (
     <>
-      <Container component="main" maxWidth="xs">
+      <Container component="main" maxWidth="xs" >
         <CssBaseline />
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>

@@ -4,7 +4,6 @@ import Button from "@material-ui/core/Button";
 import { NurseContext } from "../PersonalPage/NurseContext";
 import { Grid, InputBase } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
-import { TestPageHeight } from "../AppCss";
 
 class testPage extends React.Component {
   static contextType = NurseContext;
@@ -29,19 +28,20 @@ class testPage extends React.Component {
   }
 
   createTest() {
-    this.props.history.push("/TestManagement/createNewTest");
+    this.props.history.push(`${this.props.match.url}/createnewtest`);
   }
   searchTestByPatient(event) {
     var code = event.keyCode || event.which;
     if (code === 13) {
-      this.props.history.push("/TestManagement/testListPage");
+      this.props.history.push(`${this.props.match.url}/alltests`);
       this.context.setNurseContext("searchMethod", "patientId");
       this.context.setNurseContext("searchValue", this.state.searchValue);
     }
   }
 
   showAllTest() {
-    this.props.history.push("/TestManagement/allTestListPage");
+    console.log(this.props.match)
+    this.props.history.push(`${this.props.match.url}/alltests`);
     this.context.setNurseContext("searchMethod", "all");
   }
 

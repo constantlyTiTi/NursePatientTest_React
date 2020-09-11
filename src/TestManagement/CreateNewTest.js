@@ -10,6 +10,7 @@ import {
 } from "@material-ui/core";
 import { NurseContext } from "../PersonalPage/NurseContext";
 import { withRouter } from "react-router-dom";
+import {ServerUrl} from '../Constant'
 
 class CreateNewTest extends React.Component {
   static contextType = NurseContext;
@@ -44,12 +45,12 @@ class CreateNewTest extends React.Component {
 
   //Get Test Item Options and the Patients of current Nurse
   async componentDidMount() {
-    const url = "http://localhost:8080/TestItem/AllTestItems";
+    const url = `${ServerUrl}TestItem/AllTestItems`;
     const response = await fetch(url);
     const data = await response.json();
     this.setState({ testItems: data, loading: false });
 
-    const patientUrl = `http://localhost:8080/nurse/${this.context.nurseSharedId}/patients`;
+    const patientUrl = `${ServerUrl}nurse/${this.context.nurseSharedId}/patients`;
     const patientResponse = await fetch(patientUrl);
     const patientData = await patientResponse.json();
     this.setState({ patientList: patientData, patientLoading: false });
@@ -68,7 +69,7 @@ class CreateNewTest extends React.Component {
       this.state.test.testItemId !== "" &&
       this.state.test.testResult !== ""
     ) {
-      const url = "http://localhost:8080/newTest";
+      const url = `${ServerUrl}newTest`;
       fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -86,8 +87,7 @@ class CreateNewTest extends React.Component {
           } else {
             this.context.setNurseContext("searchMethod", "all");
           } //End searchMethod set
-          this.props.history.push("/TestManagement/allTestListPage");
-          console.log("new Test searchMethod",this.context.searchMethod);
+          this.props.history.push(`alltests`);
         }
       });//End data fetch
     } 

@@ -10,6 +10,7 @@ import {
 } from "@material-ui/core";
 import { NurseContext } from "../PersonalPage/NurseContext";
 import { withRouter } from "react-router-dom";
+import {ServerUrl} from '../Constant'
 
 class testDetails extends React.Component {
   static contextType = NurseContext;
@@ -48,26 +49,26 @@ class testDetails extends React.Component {
     this.nurseIdEventHandler = this.nurseIdEventHandler.bind(this);
     this.patientIdEventHandler = this.patientIdEventHandler.bind(this);
     this.dateEventHandler = this.dateEventHandler.bind(this);
-    this.cancel = this.cancel.bind(this);
+    this.reset = this.reset.bind(this);
     this.testItemIdEventHandler = this.testItemIdEventHandler.bind(this);
     this.testResultEventHandler = this.testResultEventHandler.bind(this);
   }
   //Get testInfor and testItem options and patient options
   async componentDidMount() {
     let testId = this.context.test.testId;
-    const url = `http://localhost:8080/tests/testId_${testId}`;
+    const url = `${ServerUrl}tests/testId_${testId}`;
     const response = await fetch(url);
     const data = await response.json();
     if(response.ok){
     this.setState({ test: data,backupTest:data,loading:false });}
 
-    const testItemUrl = "http://localhost:8080/TestItem/AllTestItems";
+    const testItemUrl = `${ServerUrl}TestItem/AllTestItems`;
     const testItemResponse = await fetch(testItemUrl);
     const testItemData = await testItemResponse.json();
     if(testItemResponse.ok){
     this.setState({ testItems: testItemData, testItemloading: false });}
 
-    const patientUrl = `http://localhost:8080/nurse/${this.context.nurseSharedId}/patients`;
+    const patientUrl = `${ServerUrl}nurse/${this.context.nurseSharedId}/patients`;
     const patientResponse = await fetch(patientUrl);
     const patientData = await patientResponse.json();
     if(patientResponse.ok){
@@ -115,16 +116,15 @@ class testDetails extends React.Component {
       this.state.test.testItemId !== "" &&
       this.state.test.testResult !== ""
     ) {
-      const url = `http://localhost:8080//tests/testId_${testId}`;
+      const url = `${ServerUrl}tests/testId_${testId}`;
       fetch(url, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(this.state.test),
       }).then((response) => {
         if(response.ok){
-        this.context.setNurseContext("searchMethod", "patientId");
-        this.context.setNurseContext("searchValue", this.state.test.patientId);
-        this.props.history.push("/TestManagement/allTestListPage");}
+        this.context.setNurseContext("searchMethod", "all");
+        this.props.history.push(`alltests`);}
       });
     } else {
       this.state.test.nurseId === "" && this.setState({ nurseIdError: true });
@@ -137,7 +137,7 @@ class testDetails extends React.Component {
         this.setState({ testResultError: true });
     }
   }
-  cancel() {
+  reset() {
     this.setState({
       test: this.state.backupTest
     });
@@ -240,8 +240,8 @@ class testDetails extends React.Component {
                   </Button>
                 </Grid>
                 <Grid item xs={12} sm={12} md={6} lg={6}>
-                  <Button color="secondary" onClick={this.cancel}>
-                    Cancel
+                  <Button color="secondary" onClick={this.reset}>
+                    Reset
                   </Button>
                 </Grid>
               </Grid>

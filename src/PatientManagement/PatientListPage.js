@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Link, withRouter } from "react-router-dom";
+import { Link, withRouter,useRouteMatch } from "react-router-dom";
 import { NurseContext } from "../PersonalPage/NurseContext";
 import {
   Table,
@@ -8,13 +8,16 @@ import {
   TableBody,
   TableContainer,
   Paper,
-  Button
+  Button,
+  Avatar
 } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/core/styles";
 
 import StyledTableCell from "../TableContent/StyledTableCell";
 import StyledTableRow from "../TableContent/StyledTableRow";
 import { UseStyles, TableTheme } from "../AppCss";
+import MedicalTestIcon from '../assets/Icon_medicalTestTube.png'
+import {ServerUrl} from '../Constant'
 
 const PatientListPage = ({ history }) => {
   const [patientList, setPatientList] = useState([]);
@@ -22,6 +25,7 @@ const PatientListPage = ({ history }) => {
   //   set Css
   const useStyles = UseStyles();
   const tableTheme = TableTheme;
+  let {url}=useRouteMatch();
 
   useEffect(() => {
     const id = nurseContext.nurseSharedId;
@@ -30,22 +34,23 @@ const PatientListPage = ({ history }) => {
   }, []);
 
   async function fetchData(id) {
-    const url = `http://localhost:8080/nurse/${id}/patients`;
-    const response = await fetch(url);
+    const listUrl = `${ServerUrl}nurse/${id}/patients`;
+    const response = await fetch(listUrl);
     const data = await response.json();
     await setPatientList(data);
   }
 
-  const method = (patient) => {
+  const editPage = (patient,to) => {
     nurseContext.setNurseContext("patient", patient);
+    history.push(to);
   };
 
   const createNewPatient = () => {
-    history.push("/PatientManagement/createNewPatient");
+    history.push(`${url}/createnewpatient`);
   };
 
-  const deleteItem = (url, id) => {
-    return fetch(url, {
+  const deleteItem = (deleteUrl, id) => {
+    return fetch(deleteUrl, {
       method: "DELETE",
     }).then((response) => {
       response.ok && fetchData(id);
@@ -53,11 +58,9 @@ const PatientListPage = ({ history }) => {
   };
 
   const searchTestsByPatientId = (id) => {
-    console.log(id);
-    console.log(nurseContext);
     nurseContext.setNurseContext("searchMethod", "patientId");
     nurseContext.setNurseContext("searchValue", id);
-    console.log(nurseContext);
+    history.push("test/alltests");
   };
 
   return (
@@ -89,32 +92,29 @@ const PatientListPage = ({ history }) => {
                       <StyledTableCell>{item.nurseId}</StyledTableCell>
                       <StyledTableCell>{item.room}</StyledTableCell>
                       <StyledTableCell>
-                        <Link
-                          to="/TestManagement/testListPage"
+                        <Avatar
                           onClick={() => searchTestsByPatientId(item.patientId)}
-                        >
-                          Find Tests
-                        </Link>{" "}
-                        |
+                          src={MedicalTestIcon}
+                          alt="img to the Test"
+                        />
                       </StyledTableCell>
                       <StyledTableCell>
-                        <Link
-                          to={`/PatientManagement/Patient/${item.patientId}`}
-                          onClick={() => method(item)}
+                        <Button
+                          to={`patient/${item.patientId}`}
+                          onClick={() => editPage(item,`patient/${item.patientId}`)}
+                          color="primary"
                         >
                           Edit
-                        </Link>{" "}
-                        |
-                        <input
-                          type="button"
+                        </Button>{" "}
+                        <Button
                           onClick={() =>
                             deleteItem(
-                              `http://localhost:8080/patients/paitent_${item.patientId}`,
+                              `${ServerUrl}patients/paitent_${item.patientId}`,
                               item.nurseId
                             )
                           }
-                          value="Delete"
-                        />
+                          color="secondary"
+                        >Delete</Button>
                       </StyledTableCell>
                     </StyledTableRow>
                   );
@@ -125,7 +125,7 @@ const PatientListPage = ({ history }) => {
         </div>
       </ThemeProvider>
       <div className={useStyles.button}>
-      <Button onClick={createNewPatient}>Add New Patient</Button>
+      <Button onClick={createNewPatient} color="primary" variant="contained">Add New Patient</Button>
       </div>
     </>
   );

@@ -1,13 +1,6 @@
-import React, { useState, useEffect, useContext } from "react";
+import React from "react";
 import {
-  Table,
-  TableHead,
   TableRow,
-  TableCell,
-  StyledTableCell,
-  TableBody,
-  TableContainer,
-  Paper,
 } from "@material-ui/core";
 
 import { withStyles } from "@material-ui/core/styles";
