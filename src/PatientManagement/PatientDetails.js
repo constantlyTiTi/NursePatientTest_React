@@ -10,7 +10,7 @@ import {
   MenuItem,
   Button,
 } from "@material-ui/core";
-import {ServerUrl} from '../Constant'
+import {SERVER_URL} from '../Constant'
 
 export default function Details() {
   let history = useHistory();
@@ -57,7 +57,7 @@ export default function Details() {
 
   async function updatePatient() {
     const patientId = sharedPatient.patientId;
-    const patientUrl = `${ServerUrl}patients/patient_${patientId}`;
+    const patientUrl = `${SERVER_URL}patients/patient_${patientId}`;
 
     if (
       patient.firstName !== "" &&

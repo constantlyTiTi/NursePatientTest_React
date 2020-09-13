@@ -10,7 +10,7 @@ import {
 } from "@material-ui/core";
 import { NurseContext } from "../PersonalPage/NurseContext";
 import { withRouter } from "react-router-dom";
-import {ServerUrl} from '../Constant'
+import {SERVER_URL} from '../Constant'
 
 class CreateNewTest extends React.Component {
   static contextType = NurseContext;
@@ -45,12 +45,12 @@ class CreateNewTest extends React.Component {
 
   //Get Test Item Options and the Patients of current Nurse
   async componentDidMount() {
-    const url = `${ServerUrl}TestItem/AllTestItems`;
+    const url = `${SERVER_URL}TestItem/AllTestItems`;
     const response = await fetch(url);
     const data = await response.json();
     this.setState({ testItems: data, loading: false });
 
-    const patientUrl = `${ServerUrl}nurse/${this.context.nurseSharedId}/patients`;
+    const patientUrl = `${SERVER_URL}nurse/${this.context.nurseSharedId}/patients`;
     const patientResponse = await fetch(patientUrl);
     const patientData = await patientResponse.json();
     this.setState({ patientList: patientData, patientLoading: false });
@@ -69,7 +69,7 @@ class CreateNewTest extends React.Component {
       this.state.test.testItemId !== "" &&
       this.state.test.testResult !== ""
     ) {
-      const url = `${ServerUrl}newTest`;
+      const url = `${SERVER_URL}newTest`;
       fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },

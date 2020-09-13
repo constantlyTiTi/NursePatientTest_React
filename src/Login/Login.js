@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { NurseContext } from "../PersonalPage/NurseContext";
-import { Link, useHistory,useRouteMatch } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import {
   Grid,
   Container,
@@ -14,41 +14,66 @@ import {
   Button,
 } from "@material-ui/core";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import {ServerUrl} from '../Constant'
+import { SERVER_URL, LOGIN_ID_PASSWORD_EMPTY_ERROR, LOGIN_MATCH} from "../Constant";
 
 export default function Login(props) {
   const appContext = useContext(NurseContext);
   let history = useHistory();
-  const [loginState, setLoginState] = useState({
-    nurseSharedId: "",
+  const [loginNurseState, setLoginState] = useState({
+    nurseId: "",
     password: "",
+  });
+  const [loginError, setLoginError] = useState({
     idError: false,
-    idErrorMessage:"",
     passwordError: false,
-    passwordErrorMessage:"",
-
+    loginMessage: "",
   });
   function nurseIdOnChangeHandler(e) {
-    setLoginState({ ...loginState, nurseSharedId: e.target.value,idError: false,idErrorMessage:""  });
+    setLoginState({ ...loginNurseState, nurseId: e.target.value });
+    setLoginError({ ...loginError, idError: false });
   }
   function passwordOnChangeHandler(e) {
-    setLoginState({ ...loginState, password: e.target.value,passwordError: false,passwordErrorMessage:"" });
+    setLoginState({ ...loginNurseState, password: e.target.value });
+    setLoginError({ ...loginError, passwordError: false });
   }
-  async function login(event) {
-    const loginUrl = `${ServerUrl}${loginState.nurseSharedId}`;
-    const response = await fetch(loginUrl);
-    const data = await response.json();
-    if (data != null) {
-      if (loginState.password === data.password) {
-        appContext.setNurseContext("nurseSharedId", loginState.nurseSharedId);
+  function login(event) {
+    const loginUrl = `${SERVER_URL}login`;
+//set error for not enter id or password
+    loginNurseState.nurseId === "" &&
+      setLoginError({ ...loginError, idError: true });
+    loginNurseState.password === "" &&
+      setLoginError({ ...loginError, passwordError: true });
+    if (loginError.idError || loginError.passwordError) {
+      setLoginError({
+        ...loginError,
+        loginErrorMessage: LOGIN_ID_PASSWORD_EMPTY_ERROR,
+      });
+    } 
+    //validate user from backend and go to next page if success
+    else {
+      fetch(loginUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(loginNurseState),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          const loginMessage= data.message;
+          // setLoginError({ ...loginError,passwordError:true,loginMessage: data.message});
 
-        history.push(`${props.parentPath}nurseprofile`);
-      } else {
-        setLoginState({ ...loginState, passwordError: true,passwordErrorMessage:"Password not match" });
-      }
-    } else {
-      setLoginState({ ...loginState, idError: true,idErrorMessage:"ID not Exist" });
+          if (loginMessage === LOGIN_MATCH) {
+            appContext.setNurseContext(
+              "nurseSharedId",
+              loginNurseState.nurseId
+            );
+            history.push(`nurseprofile`);
+          }else{
+            setLoginError({ ...loginError, passwordError: true,loginMessage });
+          }
+        }
+        );
     }
+
     event.preventDefault();
   }
 
@@ -72,10 +97,9 @@ export default function Login(props) {
     },
   }));
   const classes = useStyles();
-
   return (
     <>
-      <Container component="main" maxWidth="xs" >
+      <Container component="main" maxWidth="xs">
         <CssBaseline />
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
@@ -84,9 +108,9 @@ export default function Login(props) {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <form className={classes.form} >
+          <form className={classes.form}>
             <TextField
-              error={loginState.idError}
+              error={loginError.idError}
               variant="outlined"
               margin="normal"
               required
@@ -94,13 +118,14 @@ export default function Login(props) {
               id="nurseId"
               label="Nurse ID"
               name="nurseId"
-              helperText={loginState.idErrorMessage}
+              helperText={loginError.loginMessage}
               autoFocus
-              value={loginState.nurseSharedId}
+              value={loginNurseState.nurseId}
               onChange={nurseIdOnChangeHandler}
             />
+
             <TextField
-              error={loginState.passwordError}
+              error={loginError.passwordError}
               variant="outlined"
               margin="normal"
               required
@@ -110,8 +135,8 @@ export default function Login(props) {
               type="password"
               id="password"
               autoComplete="current-password"
-              helperText={loginState.passwordErrorMessage}
-              value={loginState.password}
+              helperText={loginError.loginMessage}
+              value={loginNurseState.password}
               onChange={passwordOnChangeHandler}
             />
             <FormControlLabel

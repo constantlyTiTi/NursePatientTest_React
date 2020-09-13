@@ -4,7 +4,7 @@ import "./App.css";
 import NavigationBar from "./NavigationBar/NavigationBar";
 import { Switch, Route,withRouter } from "react-router-dom";
 import Login from "./Login/Login";
-import ProjectDescription from "./WebDescription/ProjectNavigation";
+import ProjectDescription from "./WebDescription/ProjectDescription";
 import { NurseContext } from "./PersonalPage/NurseContext";
 // import PersonalPage from "./PersonalPage/PersonalPage";
 import { AppBar, Typography, Box, Toolbar, Grid,CardMedia } from "@material-ui/core";
@@ -44,7 +44,7 @@ const navHeader = [
 const routerMapping = [
   {
     name: "Profile",
-    to: "nurseProfile",
+    to: "nurseprofile",
     typoClass: "App-NavHeader-typo",
   },
   { name: "Tests", to: "test", typoClass: "App-NavHeader-typo" },

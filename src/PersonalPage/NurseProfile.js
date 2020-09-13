@@ -1,7 +1,7 @@
 import React from "react";
 import { NurseContext } from "./NurseContext";
-import { TextField, Grid, Button } from "@material-ui/core";
-import {ServerUrl} from '../Constant' 
+import { TextField, Grid, Button,CircularProgress } from "@material-ui/core";
+import {SERVER_URL} from '../Constant' 
 // const NurseIdContext = React.createContext(1);
 export default class NurseProfile extends React.Component {
   static contextType = NurseContext;
@@ -26,7 +26,7 @@ export default class NurseProfile extends React.Component {
   //fetch data
   async componentDidMount() {
     const sharedNurseId = this.context.nurseSharedId;
-    const url = `${ServerUrl}nurse/${sharedNurseId}`;
+    const url = `${SERVER_URL}nurse/${sharedNurseId}`;
 
     console.log("context",this.context);
     const response = await fetch(url);
@@ -58,7 +58,7 @@ export default class NurseProfile extends React.Component {
   //handle submit updated data
   async handleOnSubmit(event) {
     const sharedNurseId = this.context.nurseSharedId;
-    const url = `${ServerUrl}nurse/${sharedNurseId}`;
+    const url = `${SERVER_URL}nurse/${sharedNurseId}`;
     const postUpdate = {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
@@ -72,7 +72,7 @@ export default class NurseProfile extends React.Component {
         <>
       <div className="NurseProfile-page">
           {this.state.loading || !this.state.nurse ? (
-            <div>Loading...</div>
+            <CircularProgress />
           ) : (
             <Grid container spacing={2}>
               <Grid item xs={12} sm={12} md={6} lg={6}>

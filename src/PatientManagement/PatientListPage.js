@@ -17,7 +17,9 @@ import StyledTableCell from "../TableContent/StyledTableCell";
 import StyledTableRow from "../TableContent/StyledTableRow";
 import { UseStyles, TableTheme } from "../AppCss";
 import MedicalTestIcon from '../assets/Icon_medicalTestTube.png'
-import {ServerUrl} from '../Constant'
+import {SERVER_URL} from '../Constant'
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 const PatientListPage = ({ history }) => {
   const [patientList, setPatientList] = useState([]);
@@ -34,7 +36,7 @@ const PatientListPage = ({ history }) => {
   }, []);
 
   async function fetchData(id) {
-    const listUrl = `${ServerUrl}nurse/${id}/patients`;
+    const listUrl = `${SERVER_URL}nurse/${id}/patients`;
     const response = await fetch(listUrl);
     const data = await response.json();
     await setPatientList(data);
@@ -99,22 +101,21 @@ const PatientListPage = ({ history }) => {
                         />
                       </StyledTableCell>
                       <StyledTableCell>
-                        <Button
+                        <EditIcon
                           to={`patient/${item.patientId}`}
                           onClick={() => editPage(item,`patient/${item.patientId}`)}
                           color="primary"
                         >
-                          Edit
-                        </Button>{" "}
-                        <Button
+                        </EditIcon>{" "}
+                        <DeleteIcon
                           onClick={() =>
                             deleteItem(
-                              `${ServerUrl}patients/paitent_${item.patientId}`,
+                              `${SERVER_URL}patients/paitent_${item.patientId}`,
                               item.nurseId
                             )
                           }
                           color="secondary"
-                        >Delete</Button>
+                        />
                       </StyledTableCell>
                     </StyledTableRow>
                   );

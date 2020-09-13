@@ -17,7 +17,9 @@ import { ThemeProvider } from "@material-ui/core/styles";
 import StyledTableCell from "../TableContent/StyledTableCell";
 import StyledTableRow from "../TableContent/StyledTableRow";
 import { UseStyles, TableTheme } from "../AppCss";
-import {ServerUrl} from '../Constant'
+import {SERVER_URL} from '../Constant'
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 export default function TestListPage() {
   const [tests, setTests] = useState([]);
@@ -37,10 +39,10 @@ export default function TestListPage() {
       let listUrl = "";
       if (sharedSearchMethod === "patientId") {
         let patientId = sharedNurseContext.searchValue;
-        listUrl = `${ServerUrl}tests/patientId_${patientId}`;
+        listUrl = `${SERVER_URL}tests/patientId_${patientId}`;
         setLisOwner(`Patient ID ${patientId} has below tests`);
       } else {
-        listUrl = `${ServerUrl}tests/nurseId_${nurseId}`;
+        listUrl = `${SERVER_URL}tests/nurseId_${nurseId}`;
         setLisOwner(`Nurse ID ${nurseId} has done below tests`);
       }
       fetch(listUrl)
@@ -99,22 +101,20 @@ export default function TestListPage() {
                               {item.date.split("T", 1)}
                             </StyledTableCell>
                             <StyledTableCell>
-                              <Button
+                              <EditIcon
                                 onClick={() => updateContext(item)}
                                 color="primary"
                               >
-                                Edit
-                              </Button>
-                              <Button
+                              </EditIcon>
+                              <DeleteIcon
                                 onClick={() =>
                                   deleteItem(
-                                    `${ServerUrl}tests/testId_${item.testId}`
+                                    `${SERVER_URL}tests/testId_${item.testId}`
                                   )
                                 }
                                 color="secondary"
                               >
-                                Delete
-                              </Button>
+                              </DeleteIcon>
                             </StyledTableCell>
                           </StyledTableRow>
                         );

@@ -10,7 +10,7 @@ import {
 } from "@material-ui/core";
 import { NurseContext } from "../PersonalPage/NurseContext";
 import { withRouter } from "react-router-dom";
-import {ServerUrl} from '../Constant'
+import {SERVER_URL} from '../Constant'
 
 class testDetails extends React.Component {
   static contextType = NurseContext;
@@ -56,19 +56,19 @@ class testDetails extends React.Component {
   //Get testInfor and testItem options and patient options
   async componentDidMount() {
     let testId = this.context.test.testId;
-    const url = `${ServerUrl}tests/testId_${testId}`;
+    const url = `${SERVER_URL}tests/testId_${testId}`;
     const response = await fetch(url);
     const data = await response.json();
     if(response.ok){
     this.setState({ test: data,backupTest:data,loading:false });}
 
-    const testItemUrl = `${ServerUrl}TestItem/AllTestItems`;
+    const testItemUrl = `${SERVER_URL}TestItem/AllTestItems`;
     const testItemResponse = await fetch(testItemUrl);
     const testItemData = await testItemResponse.json();
     if(testItemResponse.ok){
     this.setState({ testItems: testItemData, testItemloading: false });}
 
-    const patientUrl = `${ServerUrl}nurse/${this.context.nurseSharedId}/patients`;
+    const patientUrl = `${SERVER_URL}nurse/${this.context.nurseSharedId}/patients`;
     const patientResponse = await fetch(patientUrl);
     const patientData = await patientResponse.json();
     if(patientResponse.ok){
@@ -116,7 +116,7 @@ class testDetails extends React.Component {
       this.state.test.testItemId !== "" &&
       this.state.test.testResult !== ""
     ) {
-      const url = `${ServerUrl}tests/testId_${testId}`;
+      const url = `${SERVER_URL}tests/testId_${testId}`;
       fetch(url, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },

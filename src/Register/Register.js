@@ -2,7 +2,7 @@ import React from "react";
 import { TextField, Grid, Button } from "@material-ui/core";
 import { NurseContext } from "../PersonalPage/NurseContext";
 import { withRouter } from "react-router-dom";
-import{ServerUrl} from '../Constant'
+import{SERVER_URL} from '../Constant'
 
 class Register extends React.Component {
   static contextType = NurseContext;
@@ -48,7 +48,7 @@ class Register extends React.Component {
   }
   //handle submit data
   async handleOnSubmit(event) {
-    const url = `${ServerUrl}register`;
+    const url = `${SERVER_URL}register`;
     const postSubmit = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
