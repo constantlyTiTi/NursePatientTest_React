@@ -1,24 +1,24 @@
 {
   "files": {
     "main.css": "/NursePatientTest_React/static/css/main.f805cca5.chunk.css",
-    "main.js": "/NursePatientTest_React/static/js/main.9e82d562.chunk.js",
-    "main.js.map": "/NursePatientTest_React/static/js/main.9e82d562.chunk.js.map",
+    "main.js": "/NursePatientTest_React/static/js/main.d52a1938.chunk.js",
+    "main.js.map": "/NursePatientTest_React/static/js/main.d52a1938.chunk.js.map",
     "runtime-main.js": "/NursePatientTest_React/static/js/runtime-main.22835271.js",
     "runtime-main.js.map": "/NursePatientTest_React/static/js/runtime-main.22835271.js.map",
-    "static/js/2.ac337895.chunk.js": "/NursePatientTest_React/static/js/2.ac337895.chunk.js",
-    "static/js/2.ac337895.chunk.js.map": "/NursePatientTest_React/static/js/2.ac337895.chunk.js.map",
+    "static/js/2.a5ae69dc.chunk.js": "/NursePatientTest_React/static/js/2.a5ae69dc.chunk.js",
+    "static/js/2.a5ae69dc.chunk.js.map": "/NursePatientTest_React/static/js/2.a5ae69dc.chunk.js.map",
     "index.html": "/NursePatientTest_React/index.html",
-    "precache-manifest.e325865cf11476e171713fab1b43e7b5.js": "/NursePatientTest_React/precache-manifest.e325865cf11476e171713fab1b43e7b5.js",
+    "precache-manifest.c0734e80a2be6dd738f29a7b6195708d.js": "/NursePatientTest_React/precache-manifest.c0734e80a2be6dd738f29a7b6195708d.js",
     "service-worker.js": "/NursePatientTest_React/service-worker.js",
     "static/css/main.f805cca5.chunk.css.map": "/NursePatientTest_React/static/css/main.f805cca5.chunk.css.map",
-    "static/js/2.ac337895.chunk.js.LICENSE.txt": "/NursePatientTest_React/static/js/2.ac337895.chunk.js.LICENSE.txt",
+    "static/js/2.a5ae69dc.chunk.js.LICENSE.txt": "/NursePatientTest_React/static/js/2.a5ae69dc.chunk.js.LICENSE.txt",
     "static/media/SignIn_background.jpg": "/NursePatientTest_React/static/media/SignIn_background.b79cbb31.jpg",
     "static/media/icon_notice.png": "/NursePatientTest_React/static/media/icon_notice.df2d690e.png"
   },
   "entrypoints": [
     "static/js/runtime-main.22835271.js",
-    "static/js/2.ac337895.chunk.js",
+    "static/js/2.a5ae69dc.chunk.js",
     "static/css/main.f805cca5.chunk.css",
-    "static/js/main.9e82d562.chunk.js"
+    "static/js/main.d52a1938.chunk.js"
   ]
 }
