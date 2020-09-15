@@ -34,19 +34,6 @@ const ProjectDescription = () => {
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={12} sm={12} md={12} lg={12}>
-            <Card>
-              <CardContent>
-              <Typography color="secondary">
-                <p>As the server is using a free SSL invalid certificate, you will be not able to use login for the first time.</p>
-                <p>Please start a new page and go to https://47.88.53.81:8443/</p>
-                <p>then for chrome, just simply type thisisunsafe on the page</p>
-                <p>for safari, click visit website in the advance</p>
-                <p>then you will be able to use the functions of this web page.</p>
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
         </Grid>
       </div>
     </>
