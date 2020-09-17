@@ -15,7 +15,7 @@ const ProjectDescription = () => {
                 <p>*  After login the system, nurse can manage tests by nurse or
                 by patients</p>
                 <p>*	Design and build patient and test management system for nurse by using ReactJs and spring boot.</p>
-                <p>*	The Frontend main features are login, register, nurse profile, patient list/details/CRUD, and test list/details/CRUD. Use React router and material UI to build pages. Use RESTfull API to get data.</p>
+                <p>*	The Frontend main features are login, register, nurse profile, patient list/details/CRUD, and test list/details/CRUD. Use React router and material UI to build pages. Use RESTful API to get data.</p>
                 <p>*  The Backend is built by spring boot JPA, maven, memory h2 database, and RESTful controller to expose API.</p>
                 <p>*  The backend is deployed to Heroku Cloud, and the frontend is deployed to GitHub. (sometimes the cloud may response a little bit slow, you may have to reload the home page and then login the system.)</p>
                 <Typography color="primary"><p>Currently, Nurse ID is the only way used to login the system.</p></Typography>
