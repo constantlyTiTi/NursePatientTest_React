@@ -146,7 +146,7 @@ class App extends Component {
     return (
       <>
         <header >
-          <CardMedia className="header-css" image={HeaderBackground} alt="header image"> Nurse Patient Tests Management System</CardMedia>
+          <CardMedia className="header-css" image={HeaderBackground} alt="header image"> Test Management System for Nurses</CardMedia>
          </header>
         <NurseContext.Provider value={this.state}>
           <body className="App-body">
