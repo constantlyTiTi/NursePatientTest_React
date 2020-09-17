@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "bcbd9ed4d63041bf35d3ebd961342cc0",
+    "revision": "0fa121afce5abf14d9febbec4d8c8bca",
     "url": "/NursePatientTest_React/index.html"
   },
   {
-    "revision": "7ed267ac840f4e3428c9",
+    "revision": "601ccaae5faaa17d57e1",
     "url": "/NursePatientTest_React/static/css/main.f805cca5.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/NursePatientTest_React/static/js/2.79e79db3.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "7ed267ac840f4e3428c9",
-    "url": "/NursePatientTest_React/static/js/main.8d21b62b.chunk.js"
+    "revision": "601ccaae5faaa17d57e1",
+    "url": "/NursePatientTest_React/static/js/main.723a312a.chunk.js"
   },
   {
     "revision": "fd02124faf80faf9b2f3",
