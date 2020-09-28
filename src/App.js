@@ -4,7 +4,7 @@ import "./App.css";
 import NavigationBar from "./NavigationBar/NavigationBar";
 import { Switch, Route,withRouter } from "react-router-dom";
 import Login from "./Login/Login";
-import ProjectDescription from "./WebDescription/ProjectDescription";
+import HomePageAwake from "./WebDescription/ProjectDescription";
 import { NurseContext } from "./PersonalPage/NurseContext";
 // import PersonalPage from "./PersonalPage/PersonalPage";
 import { AppBar, Typography, Box, Toolbar, Grid,CardMedia } from "@material-ui/core";
@@ -20,6 +20,8 @@ import PatientDetails from "./PatientManagement/PatientDetails";
 import Logout from "./Logout/Logout";
 import Register from './Register/Register';
 import HeaderBackground from './assets/SignIn_background.jpg'
+
+import {SERVER_URL} from './Constant'
 
 const navHeader = [
   {
@@ -161,7 +163,7 @@ class App extends Component {
               </AppBar>
               <Switch>
                 <Route exact path={`${path}`}>
-                  <ProjectDescription />
+                  <HomePageAwake />
                 </Route>
                 <Route exact path={`${path}login`}>
                   <Login parentPath={path}/>
